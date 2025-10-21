@@ -1,0 +1,6 @@
+# Data directory
+# Stores SQLite database and embeddings cache
+
+knowledge.db
+*.db-journal
+embeddings/
