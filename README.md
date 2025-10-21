@@ -1,206 +1,409 @@
-# Smart Knowledge Repository# 🎯 Smart Knowledge Repository# Smart Knowledge Repository
+# Smart Knowledge Repository# Smart Knowledge Repository# 🎯 Smart Knowledge Repository# Smart Knowledge Repository
 
 
 
-An AI-powered team knowledge repository that intelligently scrapes team member profiles and provides natural language chat interface to query team information.
+An AI-powered team knowledge repository that intelligently scrapes team member profiles and provides a natural language chat interface to query team information.
 
 
 
-## 🌟 Features**An intelligent knowledge base that scrapes website sections, stores information locally, and answers questions within scope.**An intelligent knowledge management system with advanced data collection, storage optimization, intelligent retrieval, and scope-aware AI interactions.
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)An AI-powered team knowledge repository that intelligently scrapes team member profiles and provides natural language chat interface to query team information.
+
+![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)
+
+![OpenAI](https://img.shields.io/badge/OpenAI-API-green.svg)
 
 
 
-- **Intelligent Web Scraping**: Automatically discovers and extracts team member profiles from websites
+## 🌟 Features## 🌟 Features**An intelligent knowledge base that scrapes website sections, stores information locally, and answers questions within scope.**An intelligent knowledge management system with advanced data collection, storage optimization, intelligent retrieval, and scope-aware AI interactions.
 
-- **AI-Powered Chat**: Ask questions about team members in natural language
+
+
+- **🤖 AI-Powered Chat**: Ask questions about team members in natural language
+
+- **🔍 Intelligent Web Scraping**: Automatically discovers and extracts team profiles
+
+- **📸 Photo Display**: Extracts and displays profile photos automatically  - **Intelligent Web Scraping**: Automatically discovers and extracts team member profiles from websites
+
+- **🎯 Vector Search**: OpenAI embeddings for semantic search
+
+- **✨ Clean UI**: Modern interface with auto-clearing input- **AI-Powered Chat**: Ask questions about team members in natural language
+
+- **🎨 Smart Display**: Chat input at top, newest messages first
 
 - **Profile Photos**: Automatically extracts and displays profile photosBuilt in 2 days • Structured data extraction • SQLite + FTS5 • Context-aware AI • Intelligent querying## 🌟 Features
 
-- **Vector Search**: Uses OpenAI embeddings for semantic search
-
-- **Clean UI**: Modern Streamlit interface with chat at top, newest messages first
-
-- **Auto-Clear Input**: Input field automatically clears after each question
-
----### Intelligent Content Discovery
-
 ## 🚀 Quick Start
 
-- **Sitemap Analysis**: Automatic parsing of XML/HTML sitemaps with priority scoring
+- **Vector Search**: Uses OpenAI embeddings for semantic search
 
 ### Prerequisites
 
-## ✅ ALL FEATURES VERIFIED & WORKING- **Link Pattern Recognition**: URL pattern detection and content type classification
+- **Clean UI**: Modern Streamlit interface with chat at top, newest messages first
 
-- Python 3.8+
+- Python 3.8 or higher
 
-- OpenAI API key- **Content Type Identification**: HTML structure analysis and MIME type detection
-
-
-
-### Installation| Feature | Status | Test Result |- **Knowledge Categorization**: Hierarchical topic extraction and classification
+- OpenAI API key ([Get one here](https://platform.openai.com/api-keys))- **Auto-Clear Input**: Input field automatically clears after each question
 
 
 
-1. Clone the repository:|---------|--------|-------------|- **Knowledge Graph**: Relationship mapping and entity connection building
+### Installation---### Intelligent Content Discovery
+
+
+
+1. **Clone the repository**## 🚀 Quick Start
 
 ```bash
 
-git clone https://github.com/swapnilbanduke/Smart-Knowledge-Repository.git| **Structured Data Extraction** | ✅ | 3/3 tests passed |
+git clone https://github.com/swapnilbanduke/Smart-Knowledge-Repository.git- **Sitemap Analysis**: Automatic parsing of XML/HTML sitemaps with priority scoring
 
 cd Smart-Knowledge-Repository
 
-```| **Data Storage & Retrieval** | ✅ | 5/5 tests passed |### Profile Intelligence
+```### Prerequisites
 
 
 
-2. Install dependencies:| **Context-Aware AI** | ✅ | 2/2 tests passed |- **Automatic Discovery**: Profile page discovery using URL patterns and heuristics
+2. **Install dependencies**## ✅ ALL FEATURES VERIFIED & WORKING- **Link Pattern Recognition**: URL pattern detection and content type classification
 
 ```bash
 
-pip install -r requirements.txt| **Intelligent Querying** | ✅ | 2/2 tests passed |- **Multi-Template Extraction**: Academic, corporate, social, and generic templates
+pip install -r requirements.txt- Python 3.8+
 
 ```
 
-| **User Interface** | ✅ | 3/3 tests passed |- **Contact Parsing**: Email, phone, and social link extraction
+- OpenAI API key- **Content Type Identification**: HTML structure analysis and MIME type detection
 
-3. Create `.env` file with your OpenAI API key:
+3. **Set up environment variables**
 
-```| **Data Ingestion Pipeline** | ✅ | 2/2 tests passed |- **Media Handling**: Photo and document extraction with deduplication
+
+
+Create a `.env` file in the project root:
+
+```env### Installation| Feature | Status | Test Result |- **Knowledge Categorization**: Hierarchical topic extraction and classification
 
 OPENAI_API_KEY=your_api_key_here
 
-```- **Duplicate Detection**: Fingerprinting, similarity scoring, and automatic merging
+```
 
 
+
+4. **Run the application**1. Clone the repository:|---------|--------|-------------|- **Knowledge Graph**: Relationship mapping and entity connection building
+
+```bash
+
+streamlit run dynamic_chat_app.py```bash
+
+```
+
+git clone https://github.com/swapnilbanduke/Smart-Knowledge-Repository.git| **Structured Data Extraction** | ✅ | 3/3 tests passed |
+
+The app will open in your browser at `http://localhost:8501`
+
+cd Smart-Knowledge-Repository
+
+## 📖 Usage
+
+```| **Data Storage & Retrieval** | ✅ | 5/5 tests passed |### Profile Intelligence
+
+### Initial Setup
+
+
+
+1. **Enter Website URL**: Input a company website (e.g., `https://example.com`)
+
+2. **Start Scraping**: Click the "Start Scraping" button2. Install dependencies:| **Context-Aware AI** | ✅ | 2/2 tests passed |- **Automatic Discovery**: Profile page discovery using URL patterns and heuristics
+
+3. **Wait for Extraction**: The system will find and extract team profiles
+
+4. **Start Chatting**: Ask questions about team members```bash
+
+
+
+### Example Questionspip install -r requirements.txt| **Intelligent Querying** | ✅ | 2/2 tests passed |- **Multi-Template Extraction**: Academic, corporate, social, and generic templates
+
+
+
+``````
+
+✅ "Who is the CEO?"
+
+✅ "Head of Marketing & Corporate Communications"| **User Interface** | ✅ | 3/3 tests passed |- **Contact Parsing**: Email, phone, and social link extraction
+
+✅ "Tell me about [Person Name]"
+
+✅ "Show me all directors"3. Create `.env` file with your OpenAI API key:
+
+✅ "Who handles infrastructure services?"
+
+``````| **Data Ingestion Pipeline** | ✅ | 2/2 tests passed |- **Media Handling**: Photo and document extraction with deduplication
+
+
+
+### FeaturesOPENAI_API_KEY=your_api_key_here
+
+
+
+- **💬 Chat Tab**: Natural language Q&A with automatic photo display```- **Duplicate Detection**: Fingerprinting, similarity scoring, and automatic merging
+
+- **📋 Browse Tab**: View all profiles with photos and roles
+
+- **🎛️ Filters**: Filter by department in the sidebar
+
+- **🗑️ Clear Chat**: Reset conversation anytime
 
 ### Running the App**Overall: 16/17 tests passed (94% success rate)**- **Confidence Scoring**: Quality assessment with error recovery
 
+## 🏗️ Architecture
 
+
+
+### Core Components
 
 ```bash  
 
-streamlit run dynamic_chat_app.py
+```
 
-```---### Core Knowledge Management
+├── dynamic_chat_app.py    # Main Streamlit applicationstreamlit run dynamic_chat_app.py
+
+├── enhanced_scraper.py    # Intelligent web scraping engine
+
+├── database.py            # SQLite database management```---### Core Knowledge Management
+
+└── vector_db.py          # OpenAI embeddings & AI responses
+
+```
 
 
 
-The app will be available at `http://localhost:8501`- **Web Scraping Engine**: Automated content collection from websites
+### How It WorksThe app will be available at `http://localhost:8501`- **Web Scraping Engine**: Automated content collection from websites
 
 
 
-## 📋 Usage## 🚀 Quick Start (3 Steps)- **Knowledge Storage**: Optimized SQLite database with categories and indexing
+1. **Scraping Engine**: Discovers team pages and extracts profiles
+
+2. **Database**: Stores profiles in SQLite with full-text search
+
+3. **Vector Search**: Creates OpenAI embeddings for semantic queries## 📋 Usage## 🚀 Quick Start (3 Steps)- **Knowledge Storage**: Optimized SQLite database with categories and indexing
+
+4. **AI Chat**: Generates natural language answers with photos
 
 
+
+## 🔧 Configuration
 
 ### First Time Setup- **Semantic Search**: Vector-based search using sentence transformers with relevance boosting
 
+### Environment Variables
 
 
-1. Enter a website URL (e.g., `https://amzur.com`)### 1. Scrape & Store Data- **AI Chat Assistant**: Context-aware AI responses with scope-limited knowledge
+
+| Variable | Description | Required |
+
+|----------|-------------|----------|1. Enter a website URL (e.g., `https://amzur.com`)### 1. Scrape & Store Data- **AI Chat Assistant**: Context-aware AI responses with scope-limited knowledge
+
+| `OPENAI_API_KEY` | Your OpenAI API key | ✅ Yes |
 
 2. Click "Start Scraping"
 
+### Database
+
 3. Wait for the scraper to extract team member profiles```bash- **Multi-Modal UI**: Streamlit interfaces for chat, browsing, and administration
 
-4. Start chatting!
+- **Location**: `data/leadership.db`
+
+- **Type**: SQLite4. Start chatting!
+
+- **Schema**: Profiles with name, role, bio, photo, contacts, embeddings
 
 python ingest.py
 
+## 📊 Technical Details
+
 ### Asking Questions
 
-```## 🏗️ Architecture
+### Role Extraction
 
-The chat interface supports natural language queries:
+- Searches all HTML containers for job titles```## 🏗️ Architecture
+
+- Smart noise filtering
+
+- Name cleaning from concatenated textThe chat interface supports natural language queries:
+
+- Multiple fallback strategies
 
 Output: ✅ 14 profiles scraped → Stored in SQLite
 
-- "Who is the CEO?"
+### Photo Detection
 
-- "Head of Marketing & Corporate Communications"```
+- Role-based query recognition- "Who is the CEO?"
+
+- Answer content analysis
+
+- Prominent person detection- "Head of Marketing & Corporate Communications"```
+
+- Automatic photo display for relevant queries
 
 - "Show me technology leaders"
 
-- "Tell me about [Name]"### 2. Launch Chat App┌─────────────────┐     ┌──────────────┐     ┌─────────────┐
+### Chat Interface
 
-- "Who works in Engineering?"
+- Input field always at top- "Tell me about [Name]"### 2. Launch Chat App┌─────────────────┐     ┌──────────────┐     ┌─────────────┐
+
+- Newest messages appear first
+
+- Auto-clearing input after submission- "Who works in Engineering?"
+
+- Smooth photo rendering with fallback
 
 ```bash│  Web Scraping   │────▶│  Knowledge   │────▶│    Query    │
 
+## 🐛 Troubleshooting
+
 ### Features
 
-streamlit run chat_app.py --server.port 8505│     Engine      │     │   Storage    │     │   Engine    │
+### Photos Not Showing
 
-- **Chat Tab**: Ask questions and get instant answers with photos
+- Verify the website has valid image URLsstreamlit run chat_app.py --server.port 8505│     Engine      │     │   Storage    │     │   Engine    │
 
-- **Browse Profiles**: View all team members with their roles and photos```│ • Profile Pages │     │ • SQLite     │     │ • Semantic  │
+- Check internet connection
 
-- **Department Filter**: Filter by department in the sidebar
+- Some sites may block automated scraping- **Chat Tab**: Ask questions and get instant answers with photos
+
+
+
+### Scraping Fails- **Browse Profiles**: View all team members with their roles and photos```│ • Profile Pages │     │ • SQLite     │     │ • Semantic  │
+
+- Try the direct team page URL (e.g., `/team`, `/leadership`)
+
+- Enable "Deep Scraping" in the interface- **Department Filter**: Filter by department in the sidebar
+
+- Check if the website structure is supported
 
 - **Clear Chat**: Reset conversation anytime│ • Structured    │     │ • Indexing   │     │ • Search    │
 
+### Chat Errors
+
+- Verify `OPENAI_API_KEY` is correctly set in `.env`
+
+- Check OpenAI API quota and billing
+
+- Ensure profiles are loaded in the database## 🏗️ Architecture### 3. Open Browser & Chat│ • Auto-Discovery│     │ • Categories │     │ • Scope     │
 
 
-## 🏗️ Architecture### 3. Open Browser & Chat│ • Auto-Discovery│     │ • Categories │     │ • Scope     │
+
+## 📁 Project Structure
 
 
 
-### Core Components```└─────────────────┘     └──────────────┘     └─────────────┘
+```### Core Components```└─────────────────┘     └──────────────┘     └─────────────┘
+
+Smart-Knowledge-Repository/
+
+│
+
+├── dynamic_chat_app.py      # Main application
+
+├── enhanced_scraper.py      # Web scraping logic- **`dynamic_chat_app.py`**: Main Streamlit applicationhttp://localhost:8505                              │
+
+├── database.py              # Database operations
+
+├── vector_db.py             # AI & embeddings- **`enhanced_scraper.py`**: Intelligent web scraping with robust role extraction
+
+│
+
+├── data/                    # Database directory- **`database.py`**: SQLite database management```                    ┌─────────┴─────────┐
+
+│   └── leadership.db        # SQLite database
+
+│- **`vector_db.py`**: OpenAI embeddings and AI-powered answers
+
+├── .env                     # Environment variables (create this)
+
+├── .env.example            # Environment template                    ▼                   ▼
+
+├── .gitignore              # Git ignore rules
+
+├── requirements.txt        # Python dependencies### Key Features
+
+└── README.md              # This file
+
+```**Try asking:**            ┌──────────────┐    ┌──────────────┐
 
 
 
-- **`dynamic_chat_app.py`**: Main Streamlit applicationhttp://localhost:8505                              │
+## 🤝 Contributing1. **Robust Role Extraction**
 
-- **`enhanced_scraper.py`**: Intelligent web scraping with robust role extraction
 
-- **`database.py`**: SQLite database management```                    ┌─────────┴─────────┐
 
-- **`vector_db.py`**: OpenAI embeddings and AI-powered answers
+Contributions are welcome! Please feel free to submit a Pull Request.   - Searches all HTML containers for job titles- "Who is the CEO?"            │  Streamlit   │    │ AI Assistant │
 
-                    ▼                   ▼
 
-### Key Features
 
-**Try asking:**            ┌──────────────┐    ┌──────────────┐
+1. Fork the repository   - Smart noise filtering
 
-1. **Robust Role Extraction**
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 
-   - Searches all HTML containers for job titles- "Who is the CEO?"            │  Streamlit   │    │ AI Assistant │
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)   - Name cleaning from concatenated text- "Show me technology leaders"            │      UI      │    │              │
 
-   - Smart noise filtering
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 
-   - Name cleaning from concatenated text- "Show me technology leaders"            │      UI      │    │              │
+5. Open a Pull Request   - Multiple fallback strategies
 
-   - Multiple fallback strategies
 
-- "List all executives"            │ • Chat       │    │ • Context    │
 
-2. **Intelligent Photo Detection**
+## 📝 License- "List all executives"            │ • Chat       │    │ • Context    │
 
-   - Role-based query recognition            │ • Browse     │    │ • Scope      │
 
-   - Answer content analysis
 
-   - Prominent person detection---            │ • Admin      │    │ • Helpful    │
+This project is licensed under the MIT License - see the LICENSE file for details.2. **Intelligent Photo Detection**
 
-   - Automatic photo display
 
-            └──────────────┘    └──────────────┘
 
-3. **Clean Chat Interface**
+## 🙏 Acknowledgments   - Role-based query recognition            │ • Browse     │    │ • Scope      │
 
-   - Input always at top## 📦 What's Included```
 
-   - Newest messages first
 
-   - Auto-clearing input field
+- **[Streamlit](https://streamlit.io/)** - For the amazing web framework   - Answer content analysis
 
-   - Smooth photo rendering
+- **[OpenAI](https://openai.com/)** - For powerful AI capabilities
 
-### Core Modules## 📁 Project Structure
+- **[BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/)** - For web scraping   - Prominent person detection---            │ • Admin      │    │ • Helpful    │
 
-## 📊 Database Schema
+
+
+## 📧 Support   - Automatic photo display
+
+
+
+For questions or issues:            └──────────────┘    └──────────────┘
+
+- Open an issue on [GitHub](https://github.com/swapnilbanduke/Smart-Knowledge-Repository/issues)
+
+- Check existing issues for solutions3. **Clean Chat Interface**
+
+
+
+## 🎯 Roadmap   - Input always at top## 📦 What's Included```
+
+
+
+- [ ] Add export functionality (CSV, JSON)   - Newest messages first
+
+- [ ] Support for multiple languages
+
+- [ ] Enhanced analytics dashboard   - Auto-clearing input field
+
+- [ ] Email notifications for updates
+
+- [ ] API endpoints for integration   - Smooth photo rendering
+
+
+
+---### Core Modules## 📁 Project Structure
+
+
+
+**Made with ❤️ for better team knowledge management**## 📊 Database Schema
+
 
 
 
