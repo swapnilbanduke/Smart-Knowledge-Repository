@@ -345,14 +345,26 @@ if profile_count == 0 or not st.session_state['website_scraped']:
                     help="Recommended: Extracts detailed information from each person's profile page"
                 )
                 
-                # Scrape the page with intelligent discovery
-                with st.spinner(f"🕷️ Intelligently scraping {team_url}..."):
+                # Scrape the page with intelligent discovery and progress bar
+                st.markdown("---")
+                progress_bar = st.progress(0)
+                status_text = st.empty()
+                
+                # Progress callback function
+                def update_progress(current, total, message):
+                    progress = current / total if total > 0 else 0
+                    progress_bar.progress(progress)
+                    status_text.text(message)
+                
+                try:
                     if deep_scrape:
-                        st.info("⚙️ Deep scraping enabled - Extracting detailed information (photos, bios, contacts)...")
-                        profiles = scrape_with_discovery(website_url, deep_scrape=True)
+                        status_text.info("⚙️ Deep scraping enabled - Extracting detailed information...")
+                        profiles = scrape_with_discovery(website_url, deep_scrape=True, progress_callback=update_progress)
                     else:
-                        st.info("⚙️ Quick scraping - Extracting basic information...")
+                        status_text.info("⚙️ Quick scraping - Extracting basic information...")
+                        update_progress(50, 100, "📋 Scraping team page...")
                         profiles = scrape_team_page(team_url)
+                        update_progress(100, 100, "✅ Complete!")
                     
                     if not profiles:
                         st.error("❌ No team members found on this page. Please try a different URL or direct team page link.")
@@ -398,6 +410,14 @@ if profile_count == 0 or not st.session_state['website_scraped']:
                         st.info("👆 Refresh the page or click below to start chatting!")
                         if st.button("🔄 Continue to Chat", type="primary"):
                             st.rerun()
+                
+                except Exception as e:
+                    st.error(f"❌ Error during scraping: {str(e)}")
+                    logger.error(f"Scraping error: {e}", exc_info=True)
+                finally:
+                    # Clear progress indicators
+                    progress_bar.empty()
+                    status_text.empty()
 
 # ============================================
 # CHAT & BROWSE PAGE - If data exists

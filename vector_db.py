@@ -247,6 +247,20 @@ def generate_ai_answer(query: str, profiles: List[Dict[str, Any]]) -> str:
     if not profiles:
         return "I couldn't find any relevant team members for your question."
     
+    # Check for obviously out-of-scope questions about other companies
+    query_lower = query.lower()
+    external_companies = ['microsoft', 'google', 'amazon', 'apple', 'meta', 'facebook', 
+                         'tesla', 'netflix', 'ibm', 'oracle', 'salesforce', 'adobe']
+    
+    # If question mentions external company and no profile names match
+    mentions_external = any(company in query_lower for company in external_companies)
+    mentions_any_profile = any(profile['name'].lower() in query_lower for profile in profiles[:3])
+    
+    if mentions_external and not mentions_any_profile:
+        # Question is likely about an external company
+        company_mentioned = next((c for c in external_companies if c in query_lower), "that company")
+        return f"I can only answer questions about the team members in this database. I don't have information about {company_mentioned.title()} or external companies. Please ask about our team members instead."
+    
     # Prepare context from profiles (clean format without boxes)
     context = ""
     for i, profile in enumerate(profiles, 1):
@@ -265,21 +279,25 @@ def generate_ai_answer(query: str, profiles: List[Dict[str, Any]]) -> str:
         context += "\n"
     
     # Create prompt for OpenAI
-    prompt = f"""Based on the team member information below, answer the user's question in a clean, professional way.
+    prompt = f"""You are answering questions ONLY about the team members listed below. 
 
 Question: {query}
 
 Team Information:
 {context}
 
-CRITICAL INSTRUCTIONS:
-- Write EVERYTHING as a single flowing response
-- DO NOT use headers, titles, or role names as separate lines
-- Integrate the person's name and role naturally into your sentence
-- Example: "Kamesh Doddi is the Head of Managed Infrastructure Services at Amzur Technologies..."
-- Keep it conversational and natural
-- NO separate headers or title lines
-- Include LinkedIn profile link if available
+CRITICAL VALIDATION RULES:
+1. ONLY answer if the question is about someone in the Team Information above
+2. If the question is about ANYONE or ANY COMPANY not in the list above, you MUST respond: "I can only answer questions about the team members in this database. I don't have information about [whatever they asked]."
+3. NEVER make assumptions or use external knowledge
+4. NEVER mention people or companies not in the Team Information
+5. If unsure, say you don't have that information
+
+FORMATTING RULES:
+- Write naturally in flowing paragraphs
+- Integrate names and titles naturally: "John Smith is the CEO of XYZ Company..."
+- NO separate headers or bullet points
+- Include LinkedIn links if available
 
 Answer:"""
     
@@ -287,7 +305,7 @@ Answer:"""
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful corporate assistant. Write EVERYTHING in flowing paragraphs. NEVER put a person's name or role as a header. Always integrate their name and title naturally into sentences. Example: 'John Smith is the CEO of...' NOT 'CEO\n\nJohn Smith is...' Be professional and conversational."},
+                {"role": "system", "content": "You are a corporate assistant for a SPECIFIC company's team database. You can ONLY answer questions about people in the provided database. If asked about anyone or anything not in the database (like Microsoft, Google, other companies, external people), you MUST refuse and say you only have information about the team members in this specific database. NEVER use external knowledge. NEVER hallucinate. Be strict about this."},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=500,

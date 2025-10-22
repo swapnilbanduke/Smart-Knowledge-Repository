@@ -1068,13 +1068,14 @@ def merge_duplicate_profiles(profiles: List[Dict[str, Any]]) -> List[Dict[str, A
     return merged
 
 
-def scrape_with_discovery(base_url: str, deep_scrape: bool = False) -> List[Dict[str, Any]]:
+def scrape_with_discovery(base_url: str, deep_scrape: bool = False, progress_callback=None) -> List[Dict[str, Any]]:
     """
     Intelligent scraping with automatic profile discovery.
     
     Args:
         base_url: Base URL of the website
         deep_scrape: If True, scrape individual profile pages for more details
+        progress_callback: Optional callback function(current, total, message) to report progress
         
     Returns:
         List of profile dictionaries
@@ -1082,12 +1083,18 @@ def scrape_with_discovery(base_url: str, deep_scrape: bool = False) -> List[Dict
     logger.info(f"Starting intelligent scrape of: {base_url}")
     
     # Step 1: Find team page
+    if progress_callback:
+        progress_callback(0, 100, "🔍 Finding team page...")
+    
     team_page_url = find_team_page(base_url)
     if not team_page_url:
         logger.warning("Could not find team page, using base URL")
         team_page_url = base_url
     
     # Step 2: Scrape team page
+    if progress_callback:
+        progress_callback(20, 100, "📋 Scraping team page...")
+    
     profiles = scrape_team_page(team_page_url)
     
     # Step 3: If deep scrape enabled, visit individual profile pages
@@ -1096,6 +1103,10 @@ def scrape_with_discovery(base_url: str, deep_scrape: bool = False) -> List[Dict
         enhanced_profiles = []
         
         for i, profile in enumerate(profiles, 1):
+            if progress_callback:
+                progress_pct = 20 + int((i / len(profiles)) * 70)  # 20-90%
+                progress_callback(progress_pct, 100, f"🕷️ Scraping profile {i}/{len(profiles)}: {profile['name']}")
+            
             profile_url = profile.get('profile_url', '')
             if profile_url and profile_url != team_page_url:
                 logger.info(f"Scraping profile {i}/{len(profiles)}: {profile['name']}")
@@ -1115,7 +1126,13 @@ def scrape_with_discovery(base_url: str, deep_scrape: bool = False) -> List[Dict
         profiles = enhanced_profiles
     
     # Step 4: Merge duplicates
+    if progress_callback:
+        progress_callback(95, 100, "🔄 Merging duplicates...")
+    
     profiles = merge_duplicate_profiles(profiles)
+    
+    if progress_callback:
+        progress_callback(100, 100, f"✅ Completed! Found {len(profiles)} profiles")
     
     logger.info(f"✅ Final count: {len(profiles)} unique profiles")
     return profiles
