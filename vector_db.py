@@ -350,13 +350,39 @@ Answer:"""
         )
         
         if should_show_photo and profiles:
-            # Add photo URL for the first/most relevant profile
-            profile = profiles[0]
-            if profile.get('photo_url'):
-                answer += f"\n\n📸PHOTO📸{profile['photo_url']}"
+            # Find which profile the answer is actually about by checking name mentions
+            profile_to_show = None
+            
+            # Check which profile's name is mentioned in the answer
+            for profile in profiles:
+                if profile.get('name'):
+                    name = profile['name'].lower()
+                    # Check for full name or significant name parts
+                    name_parts = [part for part in name.split() if len(part) > 2]
+                    
+                    # If 2+ name parts are mentioned, it's definitely about this person
+                    matches = sum(1 for part in name_parts if part in answer_lower)
+                    if matches >= 2:
+                        profile_to_show = profile
+                        logger.info(f"Photo match: Answer mentions {profile['name']} ({matches} name parts)")
+                        break
+                    # Or if full first+last name match (for shorter names)
+                    elif matches >= 1 and len(name_parts) <= 2:
+                        profile_to_show = profile
+                        logger.info(f"Photo match: Answer mentions {profile['name']}")
+                        break
+            
+            # Fallback to first profile if no clear match
+            if not profile_to_show:
+                profile_to_show = profiles[0]
+                logger.info(f"Photo default: Using first profile {profiles[0].get('name')}")
+            
+            # Add the correct photo
+            if profile_to_show.get('photo_url'):
+                answer += f"\n\n📸PHOTO📸{profile_to_show['photo_url']}"
             else:
                 # Log if photo is missing for debugging
-                logger.warning(f"No photo URL available for {profile.get('name', 'Unknown')}")
+                logger.warning(f"No photo URL available for {profile_to_show.get('name', 'Unknown')}")
         
         return answer
         
