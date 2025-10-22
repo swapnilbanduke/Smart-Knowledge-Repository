@@ -319,35 +319,57 @@ Answer:"""
         query_lower = query.lower()
         answer_lower = answer.lower()
         
-        # Keywords that suggest asking about a person
-        single_person_keywords = ['who is', 'about', 'tell me', 'show me', 'give me', 'what about', 
-                                   'describe', 'info on', 'details', 'information about', 'photo of', 'picture of']
+        # Keywords that indicate asking about a SPECIFIC person (singular)
+        single_person_keywords = ['who is', 'about', 'tell me about', 'what about', 
+                                   'describe', 'info on', 'details about', 'information about', 
+                                   'photo of', 'picture of']
         
-        # Role-specific queries (asking for someone by title)
-        role_keywords = ['head of', 'director', 'ceo', 'cto', 'president', 'vice president', 
-                         'manager', 'lead', 'chief', 'architect', 'executive']
+        # General/plural keywords that indicate asking about MULTIPLE people (no photo)
+        general_keywords = ['list', 'show all', 'give me all', 'who are', 'all the', 
+                           'show me the', 'list all', 'find all', 'get all', 'members']
+        
+        # Role-specific queries (asking for THE specific person with that title)
+        singular_role_keywords = ['the ceo', 'the cto', 'the president', 'the director', 
+                                  'the head', 'the chief', 'the manager', 'the lead']
         
         has_person_keyword = any(keyword in query_lower for keyword in single_person_keywords)
-        has_role_keyword = any(keyword in query_lower for keyword in role_keywords)
+        has_general_keyword = any(keyword in query_lower for keyword in general_keywords)
+        has_singular_role = any(keyword in query_lower for keyword in singular_role_keywords)
         
-        # Check if answer prominently features the first profile's name (mentioned early in answer)
-        first_person_mentioned = False
-        if profiles and profiles[0].get('name'):
-            name_parts = profiles[0]['name'].lower().split()
-            # Check if name is mentioned in first 150 characters (early in answer = focused on them)
-            first_person_mentioned = any(part in answer_lower[:150] for part in name_parts if len(part) > 3)
+        # Check if answer focuses on ONE specific person
+        single_person_focused = False
+        if profiles:
+            # Count how many different people are mentioned in the answer
+            people_mentioned = 0
+            for profile in profiles[:5]:  # Check top 5 profiles
+                if profile.get('name'):
+                    name_parts = [part for part in profile['name'].lower().split() if len(part) > 3]
+                    if any(part in answer_lower for part in name_parts):
+                        people_mentioned += 1
+            
+            # If only ONE person mentioned in answer, it's focused on them
+            single_person_focused = (people_mentioned == 1)
         
-        # Show photo if:
-        # 1. Only one profile found, OR
-        # 2. Query has person-specific keywords, OR
-        # 3. Query asks for a role AND answer focuses on that person, OR
-        # 4. Person's name is mentioned prominently in answer
+        # ONLY show photo if:
+        # 1. Exactly ONE profile found (definitely specific), OR
+        # 2. Query has specific person keywords AND answer focuses on one person, OR
+        # 3. Query asks for singular role (THE CEO) AND answer focuses on one person
+        # BUT NOT if query has general/plural keywords
         should_show_photo = (
-            len(profiles) == 1 or 
-            has_person_keyword or
-            (has_role_keyword and first_person_mentioned) or
-            first_person_mentioned
+            not has_general_keyword and (
+                len(profiles) == 1 or 
+                (has_person_keyword and single_person_focused) or
+                (has_singular_role and single_person_focused)
+            )
         )
+        
+        # Log decision for debugging
+        if has_general_keyword:
+            logger.info(f"❌ No photo: General/plural query detected")
+        elif not single_person_focused and len(profiles) > 1:
+            logger.info(f"❌ No photo: Answer mentions multiple people ({len(profiles)} profiles)")
+        elif should_show_photo:
+            logger.info(f"✅ Show photo: Single person query/answer")
         
         if should_show_photo and profiles:
             # Find which profile the answer is actually about by checking name mentions
